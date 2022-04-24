@@ -1,4 +1,3 @@
-
 const networks: Map<string, any> = new Map<string, any>([
     ['0x3', {
         chainId: '0x3',
@@ -30,13 +29,11 @@ const networks: Map<string, any> = new Map<string, any>([
             decimals: 18
         }
     }]
-])
-export async function switchNetwork(chainId: string) {
-    const provider = window.ethereum;
-    if (!provider) {
-        return;
-    }
+]);
 
+export async function connect(chainId: string) {
+    const provider = getMetamaskProvider();
+    await provider.request({ method: 'eth_requestAccounts' });
     const currentChainId = await provider.request({ method: 'eth_chainId' });
     if (currentChainId !== chainId && networks.has(chainId)) {
         await provider.request({
@@ -49,18 +46,18 @@ export async function switchNetwork(chainId: string) {
             }).catch(() => {
                 throw new Error();
             })
-        })
-
-        // try {
-        //     await provider.request({
-        //         method: 'wallet_switchEthereumChain',
-        //         params: [{ chainId: chainId }]
-        //     });
-        // } catch (error) {
-        //     await provider.request({
-        //         method: 'wallet_addEthereumChain',
-        //         params: [networks.get(chainId)]
-        //     });
-        // }
+        });
     }
+}
+
+export function getConnectedAddress() {
+    return getMetamaskProvider().selectedAddress;
+}
+
+function getMetamaskProvider() {
+    const provider = window.ethereum;
+    if (!provider) {
+        throw new Error("Metamask is not installed");
+    }
+    return provider;
 }

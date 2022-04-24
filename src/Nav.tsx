@@ -7,26 +7,30 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { FormControl, Select, SelectChangeEvent } from '@mui/material';
 import * as Metamask from "./metamask"
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Nav = () => {
+    const connectedAddress = sessionStorage.connectedAddress;
     const initialState = {
-        currentChainId: '0x4',
-        isConnected: false,
-
+        currentChainId: sessionStorage.currentChainId ?? '0x4',
+        connectedAddress: connectedAddress
     };
     const [state, setState] = React.useState(initialState);
 
     const connectWallet = async () => {
-        await Metamask.switchNetwork(state.currentChainId);
-        setState({ ...state, isConnected: true });
+        await Metamask.connect(state.currentChainId);
+        const connectedAddress = Metamask.getConnectedAddress()
+        setState({ ...state, connectedAddress: connectedAddress});
+        sessionStorage.connectedAddress = connectedAddress;
     }
 
-    const changeNetwork = async (event: SelectChangeEvent) => {
+    const switchNetwork = async (event: SelectChangeEvent) => {
         const chainId = event.target.value;
-        if (state.isConnected) {
-            await Metamask.switchNetwork(chainId);
+        if (state.connectedAddress) {
+            await Metamask.connect(chainId);
         }
         setState({ ...state, currentChainId: chainId });
+        sessionStorage.currentChainId = chainId;
     };
 
     return (
@@ -42,14 +46,20 @@ const Nav = () => {
                                 labelId="select-network"
                                 id="select-network"
                                 value={state.currentChainId}
-                                onChange={changeNetwork}
+                                onChange={switchNetwork}
                             >
+                                {/* todo foreach networks */}
                                 <MenuItem value={"0x4"}>Ethereum Rinkeby</MenuItem>
                                 <MenuItem value={"0x3"}>Ethereum Ropsten</MenuItem>
                                 <MenuItem value={"0xFA2"}>Fantom Testnet</MenuItem>
                             </Select>
                         </FormControl>
-                        {!state.isConnected && <Button variant="outlined" onClick={connectWallet} >Connect</Button>}
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                        {state.connectedAddress ?
+                            <Button variant="outlined" onClick={connectWallet} > {state.connectedAddress} &nbsp; <LogoutIcon /></Button>
+                            :
+                            <Button variant="outlined" onClick={connectWallet} >Connect</Button>}
                     </Box>
                 </Toolbar>
             </Container>
