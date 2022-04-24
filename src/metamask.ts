@@ -32,10 +32,15 @@ const networks: Map<string, any> = new Map<string, any>([
 ]);
 
 export async function connect(chainId: string) {
+    if (!networks.has(chainId)) {
+        throw new Error("Unsupported chain id")
+    }
+    
     const provider = getMetamaskProvider();
     await provider.request({ method: 'eth_requestAccounts' });
     const currentChainId = await provider.request({ method: 'eth_chainId' });
-    if (currentChainId !== chainId && networks.has(chainId)) {
+    
+    if (currentChainId !== chainId) {
         await provider.request({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: chainId }]

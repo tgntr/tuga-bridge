@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { FormControl, Select, SelectChangeEvent, Tooltip } from '@mui/material';
+import { FormControl, Link, Select, SelectChangeEvent, Tooltip } from '@mui/material';
 import * as Metamask from "./metamask"
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -19,7 +19,7 @@ const Nav = () => {
 
     const connectWallet = async () => {
         await Metamask.connect(state.currentChainId);
-        const connectedAddress = Metamask.getConnectedAddress()
+        const connectedAddress = Metamask.getConnectedAddress();
         setState({ ...state, connectedAddress: connectedAddress });
         sessionStorage.connectedAddress = connectedAddress;
     }
@@ -43,7 +43,9 @@ const Nav = () => {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        TugaBridge
+                        <Link href="/" underline="none" color="black">
+                            <h3>TugaBridge</h3>
+                        </Link>
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -69,7 +71,8 @@ const Nav = () => {
                                 </Tooltip>
                             </Button>
                             :
-                            <Button variant="outlined" onClick={connectWallet} >Connect</Button>}
+                            <Button variant="outlined" onClick={connectWallet} >Connect</Button>
+                        }
                     </Box>
                 </Toolbar>
             </Container>
