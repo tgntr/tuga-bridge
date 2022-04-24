@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { FormControl, Select, SelectChangeEvent } from '@mui/material';
+import { FormControl, Select, SelectChangeEvent, Tooltip } from '@mui/material';
 import * as Metamask from "./metamask"
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -20,7 +20,7 @@ const Nav = () => {
     const connectWallet = async () => {
         await Metamask.connect(state.currentChainId);
         const connectedAddress = Metamask.getConnectedAddress()
-        setState({ ...state, connectedAddress: connectedAddress});
+        setState({ ...state, connectedAddress: connectedAddress });
         sessionStorage.connectedAddress = connectedAddress;
     }
 
@@ -32,6 +32,11 @@ const Nav = () => {
         setState({ ...state, currentChainId: chainId });
         sessionStorage.currentChainId = chainId;
     };
+
+    const disconnectWallet = () => {
+        sessionStorage.clear();
+        setState({ ...state, connectedAddress: null });
+    }
 
     return (
         <AppBar position="static" color='transparent'>
@@ -57,7 +62,12 @@ const Nav = () => {
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         {state.connectedAddress ?
-                            <Button variant="outlined" onClick={connectWallet} > {state.connectedAddress} &nbsp; <LogoutIcon /></Button>
+                            <Button variant="outlined" >
+                                {state.connectedAddress} &nbsp;
+                                <Tooltip title="Disconnect wallet" onClick={disconnectWallet}>
+                                    <LogoutIcon />
+                                </Tooltip>
+                            </Button>
                             :
                             <Button variant="outlined" onClick={connectWallet} >Connect</Button>}
                     </Box>
