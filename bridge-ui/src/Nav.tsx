@@ -9,7 +9,7 @@ import { FormControl, Link, Select, SelectChangeEvent, Tooltip } from '@mui/mate
 import * as Metamask from "./metamask"
 import LogoutIcon from '@mui/icons-material/Logout';
 
-const Nav = () => {
+export default function Nav() {
     const connectedAddress = sessionStorage.connectedAddress;
     const initialState = {
         currentChainId: sessionStorage.currentChainId ?? '0x4',
@@ -65,7 +65,7 @@ const Nav = () => {
                     <Box sx={{ flexGrow: 0 }}>
                         {state.connectedAddress ?
                             <Button variant="outlined" >
-                                {state.connectedAddress} &nbsp;
+                                {state.connectedAddress} &nbsp;&nbsp;
                                 <Tooltip title="Disconnect wallet" onClick={disconnectWallet}>
                                     <LogoutIcon />
                                 </Tooltip>
@@ -79,4 +79,3 @@ const Nav = () => {
         </AppBar>
     );
 };
-export default Nav;
