@@ -11,18 +11,14 @@ const FANTOM = 4002;
 
 async function main() {
   const [alice] = await ethers.getSigners();
-  const options: PayableOverrides = {
-    value: utils.parseEther("0.0001"),
-    gasLimit: 4200000,
-    gasPrice: 80000000000,
-  };
+  console.log(await alice.getBalance());
   const bridgeFactory = new Bridge__factory(alice);
   const bridge = await bridgeFactory.deploy(
+    ROPSTEN,
     "ETH",
     utils.parseEther("0.0001"),
     [DAI_ROPSTEN, FTM_ROPSTEN],
-    [ROPSTEN, RINKEBY, FANTOM],
-    options
+    [ROPSTEN, RINKEBY, FANTOM]
   );
   console.log(bridge.address);
 }
