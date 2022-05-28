@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Bridge is Ownable, ReentrancyGuard {
-    uint256 public _chainId;
+    uint public _chainId;
     string public _nativeToken;
     uint256 public _fee;
     mapping(address => bool) public _tokens;
@@ -17,11 +17,11 @@ contract Bridge is Ownable, ReentrancyGuard {
         address recipient,
         address token,
         uint256 amount,
-        uint256 destinationChainId
+        uint destinationChainId
     );
 
     constructor(
-        uint256 chainId,
+        uint chainId,
         string memory nativeToken,
         uint256 fee,
         address[] memory tokens,
@@ -30,10 +30,10 @@ contract Bridge is Ownable, ReentrancyGuard {
         _chainId = chainId;
         _nativeToken = nativeToken;
         _fee = fee;
-        for (uint256 i = 0; i < tokens.length; i++) {
+        for (uint i = 0; i < tokens.length; i++) {
             _tokens[tokens[i]] = true;
         }
-        for (uint256 i = 0; i < chains.length; i++) {
+        for (uint i = 0; i < chains.length; i++) {
             _chains[chains[i]] = true;
         }
     }
@@ -42,14 +42,14 @@ contract Bridge is Ownable, ReentrancyGuard {
         address recipient,
         address token,
         uint256 amount,
-        uint256 chainId
+        uint destinationChainId
     ) external payable onlyOwner nonReentrant {
         require(msg.value >= _fee, "Insufficient fee");
         require(recipient != address(0), "Invalid receiver");
         require(_tokens[token] == true, "Unsupported token");
         require(amount > 0, "Invalid amount");
         require(
-            chainId != _chainId && _chains[chainId] == true,
+            destinationChainId != _chainId && _chains[destinationChainId] == true,
             "Unsupported chain"
         );
         require(
@@ -57,6 +57,6 @@ contract Bridge is Ownable, ReentrancyGuard {
                 true,
             "Transaction failed"
         );
-        emit TransferERC20(msg.sender, recipient, token, amount, chainId);
+        emit TransferERC20(msg.sender, recipient, token, amount, destinationChainId);
     }
 }
