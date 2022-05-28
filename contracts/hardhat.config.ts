@@ -24,17 +24,20 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
-  defaultNetwork: "local",
   networks: {
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-      gas: 5000000,
-      gasPrice: 10000000000,
+      gas: 500000,
+      gasPrice: 200000,
     },
     local: {
       url: "http://127.0.0.1:7545/",
+      accounts:
+        process.env.LOCAL_PRIVATE_KEY !== undefined
+          ? [process.env.LOCAL_PRIVATE_KEY]
+          : [],
       gas: 6721975,
       gasPrice: 1,
     },
