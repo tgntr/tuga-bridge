@@ -29,17 +29,15 @@ const config: HardhatUserConfig = {
       url: process.env.ROPSTEN_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-      gas: 500000,
-      gasPrice: 200000,
+      gas: 200000,
+      gasPrice: 1000000,
     },
-    local: {
-      url: "http://127.0.0.1:7545/",
+    goerli: {
+      url: process.env.GOERLI_URL || "",
       accounts:
-        process.env.LOCAL_PRIVATE_KEY !== undefined
-          ? [process.env.LOCAL_PRIVATE_KEY]
-          : [],
-      gas: 6721975,
-      gasPrice: 1,
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      gas: 200000,
+      gasPrice: 1000000,
     },
   },
   gasReporter: {
