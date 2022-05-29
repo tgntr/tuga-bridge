@@ -2,6 +2,8 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { signERC2612Permit } from "eth-permit";
+// eslint-disable-next-line node/no-missing-import
+import { getTxOptions } from "../common/utils";
 import {
   Bridge,
   // eslint-disable-next-line camelcase
@@ -24,6 +26,8 @@ describe("Bridge", () => {
     _signers = await ethers.getSigners();
     const coinFactory = new TgCoin__factory(_signers[0]);
     _tokens = [await coinFactory.deploy(), await coinFactory.deploy()];
+    _tokens.forEach(async (t) => await t.deployed());
+
     const bridgeFactory = new Bridge__factory(_signers[0]);
     _bridge = await bridgeFactory.deploy(
       CHAINS[0],
@@ -32,6 +36,7 @@ describe("Bridge", () => {
       _tokens.map((t) => t.address),
       CHAINS
     );
+    await _bridge.deployed();
   });
 
   describe("sendERC20", async () => {
@@ -46,17 +51,19 @@ describe("Bridge", () => {
       );
 
       await expect(
-        await _bridge.sendERC20(
-          _signers[0].address,
-          _tokens[0].address,
-          FEE,
-          CHAINS[1],
-          signature.deadline,
-          signature.v,
-          signature.r,
-          signature.s,
-          { value: FEE }
-        )
+        await _bridge
+          .connect(_signers[0])
+          .sendERC20(
+            _signers[0].address,
+            _tokens[0].address,
+            FEE,
+            CHAINS[1],
+            signature.deadline,
+            signature.v,
+            signature.r,
+            signature.s,
+            getTxOptions(FEE)
+          )
       )
         .to.emit(_bridge, "TransferERC20")
         .withArgs(

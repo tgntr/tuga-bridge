@@ -1,4 +1,4 @@
-import { PayableOverrides, utils } from "ethers";
+import { utils } from "ethers";
 import { ethers } from "hardhat";
 // eslint-disable-next-line node/no-missing-import
 import { Bridge__factory } from "../typechain-types";
@@ -20,7 +20,8 @@ async function main() {
     [TG_COIN_GOERLI],
     [ROPSTEN, RINKEBY, FANTOM]
   );
-  console.log(bridge.address);
+  await bridge.deployed();
+  console.log("Contract deployed at address " + bridge.address);
 }
 
 main().catch((error) => {
