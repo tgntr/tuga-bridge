@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 
 contract Bridge is Ownable, ReentrancyGuard {
     uint256 public _chainId;
-    string public _nativeToken;
     uint256 public _fee;
+    string public _nativeToken;
     mapping(address => bool) public _tokens;
     mapping(uint256 => bool) public _chains;
 
-    event TransferERC20(
+    event SentERC20(
         address indexed user,
         address recipient,
         address token,
@@ -47,7 +47,7 @@ contract Bridge is Ownable, ReentrancyGuard {
         uint8 v,
         bytes32 r,
         bytes32 s
-    ) external payable onlyOwner nonReentrant {
+    ) external payable nonReentrant {
         require(msg.value >= _fee, "Insufficient fee");
         require(recipient != address(0), "Invalid receiver");
         require(_tokens[token] == true, "Unsupported token");
@@ -72,7 +72,7 @@ contract Bridge is Ownable, ReentrancyGuard {
                 true,
             "Transaction failed"
         );
-        emit TransferERC20(
+        emit SentERC20(
             msg.sender,
             recipient,
             token,

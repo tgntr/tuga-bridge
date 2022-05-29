@@ -65,7 +65,7 @@ describe("Bridge", () => {
             getTxOptions(FEE)
           )
       )
-        .to.emit(_bridge, "TransferERC20")
+        .to.emit(_bridge, "SentERC20")
         .withArgs(
           _signers[0].address,
           _signers[0].address,

@@ -6,6 +6,6 @@ export function getTxOptions(
   return {
     value: value,
     gasPrice: process.env.GAS_PRICE ?? 1000000000,
-    gasLimit: process.env.GAS_LIMIT ?? 200000,
+    gasLimit: process.env.GAS_LIMIT ?? 2000000,
   };
 }
