@@ -2,16 +2,12 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { signERC2612Permit } from "eth-permit";
-// eslint-disable-next-line node/no-missing-import
 import { getTxOptions } from "../common/utils";
 import {
   Bridge,
-  // eslint-disable-next-line camelcase
   Bridge__factory,
   ERC20Permit,
-  // eslint-disable-next-line camelcase
   TgCoin__factory,
-  // eslint-disable-next-line node/no-missing-import
 } from "../typechain-types";
 
 const CHAINS = [31337, 1, 4];

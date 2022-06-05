@@ -10,6 +10,7 @@ module.exports = {
     "standard",
     "plugin:prettier/recommended",
     "plugin:node/recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -21,5 +22,14 @@ module.exports = {
       { ignores: ["modules"] },
     ],
     "no-unused-vars": [1, { args: "all" }],
+    camelcase: [2, { ignoreImports: true }],
+    "node/no-missing-import": [
+      "error",
+      {
+        allowModules: [],
+        resolvePaths: ["./typechain-types/*"],
+        tryExtensions: [".js", ".json", ".node", ".ts"],
+      },
+    ],
   },
 };

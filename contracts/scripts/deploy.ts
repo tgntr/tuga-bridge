@@ -1,6 +1,5 @@
 import { utils } from "ethers";
 import { ethers } from "hardhat";
-// eslint-disable-next-line node/no-missing-import
 import { Bridge__factory } from "../typechain-types";
 
 const DAI_ROPSTEN = "0xE1Acc0c71c12d23329E0982922B3496ba8623378";
