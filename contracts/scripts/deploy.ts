@@ -9,16 +9,16 @@ const TG_COIN_GOERLI = "0x0bae146f9ff9af12c52868f34e7a92bc8424b5b0";
 const ROPSTEN = 3;
 const RINKEBY = 4;
 const FANTOM = 4002;
+const GOERLI = 420;
 
 async function main() {
   const [alice] = await ethers.getSigners();
   const bridgeFactory = new Bridge__factory(alice);
   const bridge = await bridgeFactory.deploy(
-    ROPSTEN,
-    "ETH",
+    ethers.utils.formatBytes32String("ETH"),
     utils.parseEther("0.000001"),
     [TG_COIN_GOERLI],
-    [ROPSTEN, RINKEBY, FANTOM]
+    [ROPSTEN, RINKEBY, FANTOM, GOERLI]
   );
   await bridge.deployed();
   console.log("Contract deployed at address " + bridge.address);

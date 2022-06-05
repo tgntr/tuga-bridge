@@ -14,7 +14,7 @@ import {
   // eslint-disable-next-line node/no-missing-import
 } from "../typechain-types";
 
-const CHAINS = [1, 4];
+const CHAINS = [31337, 1, 4];
 const FEE = ethers.utils.parseEther("0.000001");
 
 describe("Bridge", () => {
@@ -30,8 +30,7 @@ describe("Bridge", () => {
 
     const bridgeFactory = new Bridge__factory(_signers[0]);
     _bridge = await bridgeFactory.deploy(
-      CHAINS[0],
-      "ETH",
+      ethers.utils.formatBytes32String("ETH"),
       FEE,
       _tokens.map((t) => t.address),
       CHAINS
@@ -41,14 +40,42 @@ describe("Bridge", () => {
 
   describe("sendERC20", async () => {
     it("send tokens and emit event", async () => {
-      const balanceBefore = await _tokens[0].balanceOf(_bridge.address);
-      const signature = await signERC2612Permit(
+      const permit = await signERC2612Permit(
         _signers[0].provider,
         _tokens[0].address,
         _signers[0].address,
         _bridge.address,
         FEE.toString()
       );
+      const signature = await _signers[0].signMessage(
+        ethers.utils.arrayify(
+          ethers.utils.solidityKeccak256(
+            [
+              "address",
+              "address",
+              "address",
+              "uint256",
+              "uint32",
+              "uint32",
+              "uint8",
+              "bytes32",
+              "bytes32",
+            ],
+            [
+              _signers[0].address,
+              _signers[0].address,
+              _tokens[0].address,
+              FEE,
+              CHAINS[0],
+              CHAINS[1],
+              permit.v,
+              permit.r,
+              permit.s,
+            ]
+          )
+        )
+      );
+      const balanceBefore = await _tokens[0].balanceOf(_bridge.address);
 
       await expect(
         await _bridge
@@ -58,19 +85,21 @@ describe("Bridge", () => {
             _tokens[0].address,
             FEE,
             CHAINS[1],
-            signature.deadline,
-            signature.v,
-            signature.r,
-            signature.s,
+            signature,
+            permit.deadline,
+            permit.v,
+            permit.r,
+            permit.s,
             getTxOptions(FEE)
           )
       )
-        .to.emit(_bridge, "SentERC20")
+        .to.emit(_bridge, "Transfer")
         .withArgs(
           _signers[0].address,
           _signers[0].address,
           _tokens[0].address,
           FEE,
+          CHAINS[0],
           CHAINS[1]
         );
 
