@@ -22,19 +22,20 @@ module.exports = {
       { ignores: ["modules"] },
     ],
     "no-unused-vars": [1, { args: "all" }],
-    camelcase: [2, { ignoreImports: true }],
+    camelcase: ["error", { ignoreImports: true }],
+    "node/no-unpublished-import": "off",
+    "node/no-extraneous-import": [
+      "error",
+      {
+        allowModules: ["ethers", "dotenv"],
+      },
+    ],
     "node/no-missing-import": [
       "error",
       {
         allowModules: [],
-        resolvePaths: ["./typechain-types/*"],
-        tryExtensions: [".js", ".json", ".node", ".ts"],
-      },
-    ],
-    "node/no-unpublished-import": [
-      "error",
-      {
-        allowModules: ["hardhat", "ethers"],
+        resolvePaths: ["./*"],
+        tryExtensions: [".js", ".json", ".ts", ".tsx"],
       },
     ],
   },
