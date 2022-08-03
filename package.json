@@ -1,0 +1,13 @@
+{
+    "name": "tugabridge",
+    "private": true,
+    "scripts": {
+        "compile": "tsc -b -w -i",
+        "eslint": "eslint src/**/**.{ts,tsx}",
+        "eslint:fix": "eslint src/**/**.{ts,tsx} --fix"
+    },
+    "devDependencies": {},
+    "workspaces": [
+        "packages/*"
+    ]
+}
