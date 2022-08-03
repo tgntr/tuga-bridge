@@ -19,7 +19,6 @@ contract Bridge is Ownable, ReentrancyGuard {
         address receiver,
         address token,
         uint256 amount,
-        uint32 originChainId,
         uint32 destinationChainId
     );
 
@@ -96,7 +95,6 @@ contract Bridge is Ownable, ReentrancyGuard {
             receiver,
             token,
             amount,
-            uint32(block.chainid),
             destinationChainId
         );
     }
@@ -143,7 +141,6 @@ contract Bridge is Ownable, ReentrancyGuard {
             receiver,
             token,
             amount,
-            originChainId,
             uint32(block.chainid)
         );
     }
@@ -189,8 +186,7 @@ contract Bridge is Ownable, ReentrancyGuard {
             msg.sender,
             token,
             amount,
-            0,
-            uint32(block.chainid)
+            0
         );
     }
 }

@@ -9,9 +9,9 @@ import {
   ERC20Permit,
   TgCoin__factory,
 } from "../typechain-types";
+import { FEE } from "../common/constants";
 
 const CHAINS = [31337, 1, 4];
-const FEE = ethers.utils.parseEther("0.000001");
 
 describe("Bridge", () => {
   let _bridge: Bridge;
@@ -95,7 +95,6 @@ describe("Bridge", () => {
           _signers[0].address,
           _tokens[0].address,
           FEE,
-          CHAINS[0],
           CHAINS[1]
         );
 
