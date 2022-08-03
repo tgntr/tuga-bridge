@@ -5,27 +5,28 @@
         "build": "npm run build --workspaces --if-present",
         "lint": "npm run lint --workspaces --if-present"
     },
-    "devDependencies": {
-        "@types/node": "^18.6.3"
-    },
     "workspaces": [
         "packages/contracts",
         "packages/subgraph",
         "packages/ui"
     ],
     "dependencies": {
-        "typescript": "^4.7.4",
         "@tugabridge/contracts": "*",
         "@tugabridge/subgraph": "*",
         "@tugabridge/ui": "*",
+        "@types/node": "^18.6.3",
         "@typescript-eslint/eslint-plugin": "^4.33.0",
         "@typescript-eslint/parser": "^4.33.0",
+        "dotenv": "^16.0.1",
         "eslint": "^7.32.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-config-standard": "^16.0.3",
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^3.4.1",
-        "eslint-plugin-promise": "^5.2.0"
+        "eslint-plugin-promise": "^5.2.0",
+        "ethers": "^5.6.9",
+        "prettier": "^2.7.1",
+        "typescript": "^4.7.4"
     }
 }
