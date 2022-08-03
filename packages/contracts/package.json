@@ -5,7 +5,8 @@
   "scripts": {
     "build": "npx hardhat compile",
     "test": "npx hardhat test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "send": "npx hardhat run ./scripts/send.ts --network goerli"
   },
   "author": "",
   "license": "ISC",

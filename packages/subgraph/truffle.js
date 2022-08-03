@@ -2,6 +2,8 @@ require("babel-register");
 require("babel-polyfill");
 const HDWalletProvider = require("truffle-hdwallet-provider");
 
+require("dotenv").config({ path: "../../.env" });
+
 module.exports = {
   networks: {
     development: {
@@ -12,7 +14,7 @@ module.exports = {
     ropsten: {
       provider: function () {
         return new HDWalletProvider(
-          process.env.MNEMONIC,
+          process.env.OWNER_MNEMONIC,
           `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`
         );
       },
@@ -21,7 +23,7 @@ module.exports = {
     goerli: {
       provider: function () {
         return new HDWalletProvider(
-          process.env.MNEMONIC,
+          process.env.OWNER_MNEMONIC,
           `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`
         );
       },
