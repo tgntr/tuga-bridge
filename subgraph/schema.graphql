@@ -1,0 +1,8 @@
+type TransferEvent @entity {
+  id: ID!
+  sender: Bytes!
+  receiver: Bytes!
+  token: Bytes!
+  amount: BigInt!
+  destinationChainId: Int!
+}
