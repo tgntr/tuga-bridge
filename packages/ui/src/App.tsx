@@ -1,11 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Nav from './Nav';
-import Bridge from './Bridge';
+import React from "react";
+import "./App.css";
+import Bridge from "./Bridge";
 
-export default function App() {
-  return (
-    <Bridge />
-  );
+export default function App(): JSX.Element {
+  return <Bridge />;
 }
