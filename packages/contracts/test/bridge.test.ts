@@ -2,9 +2,9 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { signERC2612Permit } from "eth-permit";
-import { getTxOptions } from "../common/utils";
+import { getTxOptions } from "../utils/utils";
 import { Bridge, Bridge__factory, ERC20Permit, TgCoin__factory } from "../typechain-types";
-import { ChainsConfig } from "../common/chains.config.utils";
+import { ChainsConfig } from "../../../utils/chains.config.utils";
 import { BigNumber } from "ethers";
 
 describe("Bridge", () => {

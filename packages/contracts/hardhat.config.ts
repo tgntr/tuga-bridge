@@ -6,7 +6,7 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
-import { ChainsConfig } from "./common/chains.config.utils";
+import { ChainsConfig } from "../../utils/chains.config.utils";
 
 dotenv.config({ path: "../../.env" });
 

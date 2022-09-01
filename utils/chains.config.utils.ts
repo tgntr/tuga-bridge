@@ -1,6 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { NetworksUserConfig } from "hardhat/types/config";
-import chainsConfig from "../../../chains.config.json";
+import chainsConfig from "../chains.config.json";
 
 type TokenInfo = {
     name: string;
@@ -13,6 +12,10 @@ type ChainInfo = {
     nativeToken: string;
     fee: number;
     tokens: TokenInfo[];
+};
+
+type HardhatNetworksConfig = {
+    [networkName: string]: { url: string; accounts: string[] } | undefined;
 };
 
 export class ChainsConfig {
@@ -35,8 +38,8 @@ export class ChainsConfig {
         return new ChainsConfig(chainsConfig[0].chainId);
     };
 
-    static toHardhatNetworksConfig = (): NetworksUserConfig => {
-        const networks: NetworksUserConfig = {};
+    static toHardhatNetworksConfig = (): HardhatNetworksConfig => {
+        const networks: HardhatNetworksConfig = {};
         chainsConfig.forEach((c) => {
             const chainName = c.name.toLowerCase();
             networks[chainName] = {
