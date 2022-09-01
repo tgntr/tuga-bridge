@@ -6,6 +6,7 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
+import { ChainsConfig } from "./common/chains.config.utils";
 
 dotenv.config({ path: "../../.env" });
 
@@ -24,16 +25,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
-  networks: {
-    ropsten: {
-      url: `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY ?? ""}`,
-      accounts: [process.env.OWNER_PRIVATE_KEY ?? ""],
-    },
-    goerli: {
-      url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY ?? ""}`,
-      accounts: [process.env.OWNER_PRIVATE_KEY ?? ""],
-    },
-  },
+  networks: ChainsConfig.toHardhatNetworksConfig(),
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",

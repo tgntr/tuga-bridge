@@ -1,38 +1,26 @@
 import { run, ethers } from "hardhat";
-import {
-  TG_COIN_GOERLI,
-  ROPSTEN,
-  RINKEBY,
-  FANTOM,
-  GOERLI,
-  FEE,
-} from "../common/constants";
+import { ChainsConfig } from "../common/chains.config.utils";
 import { Bridge__factory } from "../typechain-types";
 
 async function main() {
-  const nativeToken = ethers.utils.formatBytes32String("ETH");
+  const { chainId } = await ethers.provider.getNetwork();
+  const chainsConfig = ChainsConfig.get(chainId);
+  const nativeToken = chainsConfig.nativeTokenAsBytes32();
+  const fee = chainsConfig.fee();
+  const tokens = chainsConfig.tokenAddresses();
+  const chains = ChainsConfig.chainIds();
   const [alice] = await ethers.getSigners();
 
   const bridgeFactory = new Bridge__factory(alice);
-  const bridge = await bridgeFactory.deploy(
-    nativeToken,
-    FEE,
-    [TG_COIN_GOERLI],
-    [ROPSTEN, RINKEBY, FANTOM, GOERLI]
-  );
+  const bridge = await bridgeFactory.deploy(nativeToken, fee, tokens, chains);
   await bridge.deployed();
-  console.log("Contract deployed at address " + bridge.address);
+  console.log(`Contract deployed to ${chainsConfig.chainName()} at address ${bridge.address}`);
 
   await bridge.deployTransaction.wait(5);
 
   await run("verify:verify", {
     address: bridge.address,
-    constructorArguments: [
-      nativeToken,
-      FEE,
-      [TG_COIN_GOERLI],
-      [ROPSTEN, RINKEBY, FANTOM, GOERLI],
-    ],
+    constructorArguments: [nativeToken, fee, tokens, chains],
   });
 }
 

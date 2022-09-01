@@ -3,33 +3,36 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { signERC2612Permit } from "eth-permit";
 import { getTxOptions } from "../common/utils";
-import {
-  Bridge,
-  Bridge__factory,
-  ERC20Permit,
-  TgCoin__factory,
-} from "../typechain-types";
-import { FEE } from "../common/constants";
-
-const CHAINS = [31337, 1, 4];
+import { Bridge, Bridge__factory, ERC20Permit, TgCoin__factory } from "../typechain-types";
+import { ChainsConfig } from "../common/chains.config.utils";
+import { BigNumber } from "ethers";
 
 describe("Bridge", () => {
   let _bridge: Bridge;
-  let _signers: SignerWithAddress[];
+  let _alice: SignerWithAddress;
+  let _chainId: number;
   let _tokens: ERC20Permit[];
+  let _chains: number[];
+  let _fee: BigNumber;
 
   before(async () => {
-    _signers = await ethers.getSigners();
-    const coinFactory = new TgCoin__factory(_signers[0]);
-    _tokens = [await coinFactory.deploy(), await coinFactory.deploy()];
+    [_alice] = await ethers.getSigners();
+    _chainId = await _alice.getChainId();
+
+    const chainsConfig = ChainsConfig.getTest();
+    _chains = ChainsConfig.chainIds();
+    _fee = chainsConfig.fee();
+
+    const tokenFactory = new TgCoin__factory(_alice);
+    _tokens = [await tokenFactory.deploy(), await tokenFactory.deploy()];
     _tokens.forEach(async (t) => await t.deployed());
 
-    const bridgeFactory = new Bridge__factory(_signers[0]);
+    const bridgeFactory = new Bridge__factory(_alice);
     _bridge = await bridgeFactory.deploy(
-      ethers.utils.formatBytes32String("ETH"),
-      FEE,
+      chainsConfig.nativeTokenAsBytes32(),
+      _fee,
       _tokens.map((t) => t.address),
-      CHAINS
+      _chains
     );
     await _bridge.deployed();
   });
@@ -37,13 +40,13 @@ describe("Bridge", () => {
   describe("sendERC20", async () => {
     it("send tokens and emit event", async () => {
       const permit = await signERC2612Permit(
-        _signers[0].provider,
+        _alice.provider,
         _tokens[0].address,
-        _signers[0].address,
+        _alice.address,
         _bridge.address,
-        FEE.toString()
+        _fee.toString()
       );
-      const signature = await _signers[0].signMessage(
+      const signature = await _alice.signMessage(
         ethers.utils.arrayify(
           ethers.utils.solidityKeccak256(
             [
@@ -58,12 +61,12 @@ describe("Bridge", () => {
               "bytes32",
             ],
             [
-              _signers[0].address,
-              _signers[0].address,
+              _alice.address,
+              _alice.address,
               _tokens[0].address,
-              FEE,
-              CHAINS[0],
-              CHAINS[1],
+              _fee,
+              _chainId,
+              _chains[0],
               permit.v,
               permit.r,
               permit.s,
@@ -75,31 +78,25 @@ describe("Bridge", () => {
 
       await expect(
         await _bridge
-          .connect(_signers[0])
+          .connect(_alice)
           .sendERC20(
-            _signers[0].address,
+            _alice.address,
             _tokens[0].address,
-            FEE,
-            CHAINS[1],
+            _fee,
+            _chains[0],
             signature,
             permit.deadline,
             permit.v,
             permit.r,
             permit.s,
-            getTxOptions(FEE)
+            getTxOptions(_fee)
           )
       )
         .to.emit(_bridge, "Transfer")
-        .withArgs(
-          _signers[0].address,
-          _signers[0].address,
-          _tokens[0].address,
-          FEE,
-          CHAINS[1]
-        );
+        .withArgs(_alice.address, _alice.address, _tokens[0].address, _fee, _chains[0]);
 
       expect(await _tokens[0].balanceOf(_bridge.address)).to.be.above(
-        balanceBefore.add(FEE.sub(1))
+        balanceBefore.add(_fee.sub(1))
       );
     });
   });

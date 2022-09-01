@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 
 contract TgCoin is ERC20Permit, Ownable {
-    constructor() ERC20("TgCoin", "Tg") ERC20Permit("TgCoin") {
+    constructor() ERC20("TgCoin", "TUG") ERC20Permit("TgCoin") {
         _mint(msg.sender, 10000000 * 10**18);
     }
 }

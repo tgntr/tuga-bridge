@@ -1,11 +1,4 @@
-import {
-  ReportHandler,
-  getCLS,
-  getFID,
-  getFCP,
-  getLCP,
-  getTTFB,
-} from "web-vitals";
+import { ReportHandler, getCLS, getFID, getFCP, getLCP, getTTFB } from "web-vitals";
 
 const reportWebVitals = (onPerfEntry?: ReportHandler): void => {
   if (onPerfEntry && onPerfEntry instanceof Function) {

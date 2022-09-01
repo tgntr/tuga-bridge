@@ -17,25 +17,26 @@ module.exports = {
     ecmaVersion: 12,
   },
   rules: {
-    "node/no-unsupported-features/es-syntax": [
-      "error",
-      { ignores: ["modules"] },
-    ],
+    "node/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
     "no-unused-vars": [1, { args: "all" }],
     camelcase: ["error", { ignoreImports: true }],
     "node/no-unpublished-import": "off",
-    "node/no-extraneous-import": [
-      "error",
-      {
-        allowModules: ["ethers", "dotenv"],
-      },
-    ],
+    "node/no-extraneous-import": ["error", { allowModules: ["ethers", "dotenv"] }],
     "node/no-missing-import": [
       "error",
       {
         allowModules: [],
         resolvePaths: ["./*"],
         tryExtensions: [".js", ".json", ".ts", ".tsx"],
+      },
+    ],
+    "no-use-before-define": [0],
+    "prettier/prettier": [
+      "error",
+      {
+        // todo
+        // tabWidth: 4,
+        printWidth: 100,
       },
     ],
   },

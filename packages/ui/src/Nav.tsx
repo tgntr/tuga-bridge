@@ -5,13 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import {
-  FormControl,
-  Link,
-  Select,
-  SelectChangeEvent,
-  Tooltip,
-} from "@mui/material";
+import { FormControl, Link, Select, SelectChangeEvent, Tooltip } from "@mui/material";
 import * as Metamask from "./metamask";
 import LogoutIcon from "@mui/icons-material/Logout";
 
