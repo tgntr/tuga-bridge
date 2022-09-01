@@ -3,7 +3,8 @@
     "private": true,
     "scripts": {
         "build": "npm run build --workspaces --if-present",
-        "lint": "npm run lint --workspaces --if-present"
+        "lint": "eslint ./*.* && npm run lint --workspaces --if-present",
+        "lint:fix": "eslint ./*.* --fix && npm run lint:fix --workspaces --if-present"
     },
     "workspaces": [
         "packages/contracts",

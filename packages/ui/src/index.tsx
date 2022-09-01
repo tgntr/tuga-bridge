@@ -7,10 +7,10 @@ import React from "react";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <Nav />
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <Nav />
+        <App />
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

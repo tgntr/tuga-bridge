@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Goerli",
+        "chainId": 5,
+        "nativeToken": "ETH",
+        "fee": 0.00001,
+        "tokens": [
+            {
+                "name": "TOK",
+                "address": "0x0000000000000000000000000000000000000000"
+            }
+        ]
+    },
+    {
+        "name": "Ropsten",
+        "chainId": 3,
+        "nativeToken": "ETH",
+        "fee": 0.00001,
+        "tokens": [
+            {
+                "name": "TOK",
+                "address": "0x0000000000000000000000000000000000000000"
+            }
+        ]
+    }
+]
