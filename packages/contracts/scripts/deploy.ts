@@ -1,5 +1,5 @@
 import { run, ethers } from "hardhat";
-import { ChainsConfig } from "../../../utils/chains.config.utils";
+import { ChainsConfig } from "../../common/chains.config.utils";
 import { Bridge__factory } from "../typechain-types";
 
 async function main() {

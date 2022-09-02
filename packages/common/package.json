@@ -1,12 +1,14 @@
 {
-  "name": "@tugabridge/common",
-  "version": "0.1.0",
-  "scripts": {
-    "build": "tsc --build .",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "dependencies": {
-    "truffle-hdwallet-provider": "^1.0.17"
-  }
+    "name": "@tugabridge/common",
+    "version": "0.1.0",
+    "scripts": {
+        "build": "tsc --build .",
+        "lint": "eslint ./*.*",
+        "lint:fix": "eslint ./*.* --fix",
+        "deploy": "ts-node ./deploy.ts"
+    },
+    "dependencies": {
+        "@truffle/hdwallet-provider": "^2.0.14",
+        "ts-node": "^10.9.1"
+    }
 }

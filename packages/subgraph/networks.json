@@ -1,7 +1,12 @@
 {
-  "goerli": {
-    "TugaBridge": {
-      "address": "0x140E1AC1F07DfdD30fC584d67d6CeeC19c1ac9Fa"
+    "goerli": {
+        "TugaBridge": {
+            "address": "213"
+        }
+    },
+    "ropsten": {
+        "TugaBridge": {
+            "address": "213"
+        }
     }
-  }
 }

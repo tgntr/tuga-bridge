@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 import { signERC2612Permit } from "eth-permit";
 import { getTxOptions } from "../utils/utils";
 import { Bridge, Bridge__factory, ERC20Permit, TgCoin__factory } from "../typechain-types";
-import { ChainsConfig } from "../../../utils/chains.config.utils";
+import { ChainsConfig } from "../../common/chains.config.utils";
 import { BigNumber } from "ethers";
 
 describe("Bridge", () => {
@@ -95,9 +95,7 @@ describe("Bridge", () => {
                 .to.emit(_bridge, "Transfer")
                 .withArgs(_alice.address, _alice.address, _tokens[0].address, _fee, _chains[0]);
 
-            expect(await _tokens[0].balanceOf(_bridge.address)).to.be.above(
-                balanceBefore.add(_fee.sub(1))
-            );
+            expect(await _tokens[0].balanceOf(_bridge.address)).to.be.above(balanceBefore.add(_fee.sub(1)));
         });
     });
 });

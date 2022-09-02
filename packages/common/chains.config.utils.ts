@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import chainsConfig from "../../chains.config.json";
-import HDWalletProvider from "truffle-hdwallet-provider";
+import HDWalletProvider from "@truffle/hdwallet-provider";
+
 type TokenInfo = {
     name: string;
     address: string;
@@ -60,13 +61,13 @@ export class ChainsConfig {
     };
 
     static toTruffleNetworksConfig = (): TruffleNetworksConfig => {
-        const networks = {};
+        const networks: TruffleNetworksConfig = {};
 
         chainsConfig.forEach((c) => {
             const chainName = c.name.toLowerCase();
             networks[chainName] = {
-                provider: () => new HDWalletProvider(process.env.OWNER_MNEMONIC, infuraUrl(chainName)),
-                network_id: c.chainId,
+                provider: () => new HDWalletProvider(process.env.OWNER_MNEMONIC ?? "", infuraUrl(chainName)),
+                network_id: c.chainId.toString(),
             };
         });
 
