@@ -6,7 +6,8 @@
     "build": "npx hardhat compile",
     "test": "npx hardhat test",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "deploy": "ts-node ./deploy.ts"
   },
   "author": "",
   "license": "ISC",

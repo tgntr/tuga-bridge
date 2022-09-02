@@ -7,8 +7,7 @@
     "scripts": {
         "build": "tsc --build .",
         "lint": "eslint ./*.*",
-        "lint:fix": "eslint ./*.* --fix",
-        "deploy": "ts-node ./deploy.ts"
+        "lint:fix": "eslint ./*.* --fix"
     },
     "dependencies": {
         "@truffle/hdwallet-provider": "^2.0.14",
