@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "engines": {
     "node": ">=8.3.0"
-},
+  },
   "scripts": {
     "create": "graph create tugabridge/@tugabridge/subgraph --node https://api.thegraph.com/deploy/",
     "create-local": "graph create tugabridge/@tugabridge/subgraph --node http://127.0.0.1:8020",
     "codegen": "graph codegen",
     "build": "graph codegen && graph build",
-    "deploy": "graph deploy tugabridge/@tugabridge/subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy": "ts-node ./deploy.ts",
+    "deploy-remote": "graph deploy tugabridge/@tugabridge/subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-local": "graph deploy tugabridge/@tugabridge/subgraph --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -20,6 +21,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
     "truffle": "^5.0.4",
-    "truffle-contract": "^4.0.5"
+    "truffle-contract": "^4.0.5",
+    "yaml": "^2.1.1"
   }
 }

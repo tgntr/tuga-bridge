@@ -4,19 +4,17 @@ import * as fs from "fs";
 
 const ADDRESS_REGEX = /0x[a-fA-F0-9]{40}/;
 
-const main = () => {
-    const deployResult: { chain: string; address: string | undefined }[] = [];
-    for (const chain of chainsConfig) {
-        const chainName = chain.name.toLowerCase();
+const main = (): void => {
+    const contractDeployResult: { chain: string; address: string | undefined }[] = [];
+    chainsConfig.forEach((c) => {
+        const chainName = c.name.toLowerCase();
         const deployCmd = `npx hardhat run ./scripts/deploy.ts --network ${chainName}`;
         const response = execSync(deployCmd).toString();
         const address = response.match(ADDRESS_REGEX)?.[0];
-        console.log(address);
-        deployResult.push({ chain: chainName, address: address });
+        contractDeployResult.push({ chain: chainName, address: address });
         console.log(response);
-    }
-
-    fs.writeFileSync("./deploy-result.json", JSON.stringify(deployResult, null, 4));
+    });
+    fs.writeFileSync("./contract-deploy-result.json", JSON.stringify(contractDeployResult, null, 4));
 };
 
 main();

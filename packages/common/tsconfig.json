@@ -3,7 +3,6 @@
     "compilerOptions": {
         "skipLibCheck": true,
         "outDir": "./build",
-        "module": "commonjs"
     },
     "include": ["./"]
 }

@@ -3,4 +3,4 @@ coverage.json
 typechain-types
 cache
 artifacts
-deploy-result.json
+contract-deploy-result.json
