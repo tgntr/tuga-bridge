@@ -1,0 +1,12 @@
+{
+  "name": "@tugabridge/common",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsc --build .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "truffle-hdwallet-provider": "^1.0.17"
+  }
+}

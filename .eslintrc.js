@@ -19,7 +19,7 @@ module.exports = {
     rules: {
         "node/no-unsupported-features/es-syntax": ["error", { ignores: ["modules"] }],
         "no-unused-vars": ["warn", { args: "all" }],
-        camelcase: ["error", { ignoreImports: true }],
+        camelcase: ["error", { ignoreImports: true, allow: ["network_id"] }],
         "node/no-unpublished-import": "off",
         "no-unused-expressions": ["warn"],
         "node/no-extraneous-import": ["error", { allowModules: ["ethers", "dotenv"] }],
@@ -36,7 +36,7 @@ module.exports = {
             "error",
             {
                 tabWidth: 4,
-                printWidth: 100,
+                printWidth: 110,
             },
         ],
     },
