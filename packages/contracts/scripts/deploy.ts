@@ -18,9 +18,15 @@ async function main() {
 
     await bridge.deployTransaction.wait(5);
 
-    await run("verify:verify", {
+    run("verify:verify", {
         address: bridge.address,
         constructorArguments: [nativeToken, fee, tokens, chains],
+    }).catch((err: Error) => {
+        if (err.message.includes("Already Verified")) {
+            return console.log("Contract already verified");
+        }
+
+        throw err;
     });
 }
 

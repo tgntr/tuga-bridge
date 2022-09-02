@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "build": "npm run build --workspaces --if-present",
-        "deploy": "npm run deploy --workspaces --if-present",
+        "deploy": "npm run deploy -w packages/common",
         "lint": "eslint ./*.* && npm run lint --workspaces --if-present",
         "lint:fix": "eslint ./*.* --fix && npm run lint:fix --workspaces --if-present"
     },

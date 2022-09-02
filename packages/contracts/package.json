@@ -6,9 +6,7 @@
     "build": "npx hardhat compile",
     "test": "npx hardhat test",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "send": "npx hardhat run ./scripts/send.ts --network goerli",
-    "deploy": "npx hardhat run ./scripts/deploy.ts --network goerli"
+    "lint:fix": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
