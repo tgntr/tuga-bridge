@@ -1,6 +1,9 @@
 {
     "name": "@tugabridge/common",
     "version": "0.1.0",
+    "engines": {
+        "node": ">=8.3.0"
+    },
     "scripts": {
         "build": "tsc --build .",
         "lint": "eslint ./*.*",
@@ -9,6 +12,7 @@
     },
     "dependencies": {
         "@truffle/hdwallet-provider": "^2.0.14",
-        "ts-node": "^10.9.1"
+        "ts-node": "^10.9.1",
+        "yaml": "^2.1.1"
     }
 }

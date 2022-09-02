@@ -2,31 +2,6 @@ import { BigNumber, ethers } from "ethers";
 import chainsConfig from "../../chains.config.json";
 import HDWalletProvider from "@truffle/hdwallet-provider";
 
-type TokenInfo = {
-    name: string;
-    address: string;
-};
-
-type ChainInfo = {
-    name: string;
-    chainId: number;
-    nativeToken: string;
-    fee: number;
-    tokens: TokenInfo[];
-};
-
-type HardhatNetworksConfig = {
-    [networkName: string]: { url: string; accounts: string[] } | undefined;
-};
-
-type TruffleNetworksConfig = {
-    [networkName: string]: { provider: () => any; network_id: string } | undefined;
-};
-
-const infuraUrl = (chainName: string): string => {
-    return `https://${chainName}.infura.io/v3/${process.env.INFURA_API_KEY}`;
-};
-
 export class ChainsConfig {
     private chainInfo: ChainInfo;
 
@@ -62,7 +37,6 @@ export class ChainsConfig {
 
     static toTruffleNetworksConfig = (): TruffleNetworksConfig => {
         const networks: TruffleNetworksConfig = {};
-
         chainsConfig.forEach((c) => {
             const chainName = c.name.toLowerCase();
             networks[chainName] = {
@@ -94,3 +68,24 @@ export class ChainsConfig {
         return this.chainInfo.name;
     };
 }
+
+const infuraUrl = (chainName: string): string => {
+    return `https://${chainName}.infura.io/v3/${process.env.INFURA_API_KEY}`;
+};
+
+type ChainInfo = {
+    name: string;
+    chainId: number;
+    nativeToken: string;
+    fee: number;
+    tokens: { name: string; address: string }[];
+};
+
+// todo try removing | undefined maybe??
+type HardhatNetworksConfig = {
+    [networkName: string]: { url: string; accounts: string[] } | undefined;
+};
+
+type TruffleNetworksConfig = {
+    [networkName: string]: { provider: () => any; network_id: string } | undefined;
+};

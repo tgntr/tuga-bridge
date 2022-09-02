@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "engines": {
     "node": ">=8.3.0"
-  },
+},
   "scripts": {
     "create": "graph create tugabridge/@tugabridge/subgraph --node https://api.thegraph.com/deploy/",
     "create-local": "graph create tugabridge/@tugabridge/subgraph --node http://127.0.0.1:8020",
